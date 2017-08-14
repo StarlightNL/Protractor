@@ -36,14 +36,25 @@ namespace ProtractorLib
         private I2cDevice protractorI2C;
         private SerialDevice protractorSerial;
 
+        /// <summary>
+        /// Initializes the Protractor using I2C
+        /// </summary>
+        /// <param name="i2CController">The I2C Controller to use.</param>
+        /// <param name="i2cAddress">The I2C Address</param>
+        /// <param name="I2CFastMode">Enable FastMode(Not implemented yet)</param>
         public Protractor(I2cController i2CController, int i2cAddress, bool I2CFastMode)
         {
             var settings = new I2cConnectionSettings(i2cAddress);
-            if(I2CFastMode) settings.BusSpeed = I2cBusSpeed.FastMode;
+            //if(I2CFastMode) settings.BusSpeed = I2cBusSpeed.FastMode;
             protractorI2C = i2CController.GetDevice(settings);
             _comm = I2CCOMM;
         }
 
+        /// <summary>
+        /// Initializes the Protractor using Serial
+        /// </summary>
+        /// <param name="comport">The comport name the Protractor is on</param>
+        /// <param name="baudrate">The baudrate of the Protractor</param>
         public Protractor(string comport, int baudrate)
         {
             string deviceSelector = SerialDevice.GetDeviceSelector(comport);
@@ -64,11 +75,19 @@ namespace ProtractorLib
             
             _comm = SERIALCOMM;
         }
-
+        /// <summary>
+        /// Reads all the objects from the Protractor
+        /// </summary>
+        /// <returns>Reading successful</returns>
         public bool Read()
         { // get all of the data from the protractor.
             return Read(MAXOBJECTS);
         }
+        /// <summary>
+        /// Reads a number of objects from the Protractor
+        /// </summary>
+        /// <param name="obs">The amound of objects to read</param>
+        /// <returns>Reading successful</returns>
         public bool Read(byte obs)
         { // gets obs number of objects and obs number of paths from protractor. Returns the most visible objects and most open pathways. Minimizes data transfer for time sensitive applications.
             if (obs > MAXOBJECTS) obs = MAXOBJECTS;
@@ -91,20 +110,38 @@ namespace ProtractorLib
             }
         }
 
+        /// <summary>
+        /// Get the amount of objects in the buffer
+        /// </summary>
+        /// <returns>The amount of objects in the buffer</returns>
         public int ObjectCount()
         { // returns the number of objects detected
             return (int)(_buffer[0] >> 4); // number of objects detected is the high nibble of _buffer[0]
         }
 
+        /// <summary>
+        /// Get the amount of paths detected
+        /// </summary>
+        /// <returns>The amount of paths</returns>
         public int PathCount()
         { // returns the number of paths detected
             return (int)(_buffer[0] &= 0b00001111); // number of paths detected is the low nibble of _buffer[0]
         }
 
+        /// <summary>
+        /// Get the object angle of the first object
+        /// </summary>
+        /// <returns>Object angle in degrees</returns>
         public int ObjectAngle()
         { // returns the angle to the most visible object
             return ObjectAngle(0);
         }
+        
+        /// <summary>
+        /// Get the object angle of a specific object
+        /// </summary>
+        /// <param name="ob">The object number of which you want to know the angle</param>
+        /// <returns>Object angle in degrees</returns>
         public int ObjectAngle(int ob)
         { // returns the angle to the object ob in the object list, indexed from 1. Left most object is 1. If ob exceeds number of objects detected, return zero.
             if (ob >= ObjectCount() || ob < 0)
@@ -117,10 +154,21 @@ namespace ProtractorLib
                 return angle;
             }
         }
+
+        /// <summary>
+        /// Get the visibility of the most visible object
+        /// </summary>
+        /// <returns>idk what this returns exactly</returns>
         public int ObjectVisibility()
         { // returns the visibility of the most visible object
             return ObjectVisibility(0);
         }
+
+        /// <summary>
+        /// Get the visibility of a object
+        /// </summary>
+        /// <param name="ob">The object you want to see the visibility of</param>
+        /// <returns>idk what this returns</returns>
         public int ObjectVisibility(int ob)
         { // returns the visibility of the object ob in the object list, indexed from 1. Left most object is 1. If ob exceeds number of objects detected, return zero.
             if (ob >= ObjectCount() || ob < 0)
@@ -134,10 +182,20 @@ namespace ProtractorLib
             }
         }
 
+        /// <summary>
+        /// Get the angle of the most open pathway
+        /// </summary>
+        /// <returns>Path angle in degrees</returns>
         public int PathAngle()
         { // returns the angle to the most open pathway
             return PathAngle(0);
         }
+
+        /// <summary>
+        /// Get the angle of a specific path
+        /// </summary>
+        /// <param name="pa">The path you want to get the angle off</param>
+        /// <returns>Path angle in degrees</returns>
         public int PathAngle(int pa)
         { // returns the angle to the path pa in the pathway list, indexed from 1. Left most path is 1. If pa exceeds number of pathways detected, return zero.
             if (pa >= PathCount() || pa < 0)
@@ -150,10 +208,21 @@ namespace ProtractorLib
                 return angle;
             }
         }
+
+        /// <summary>
+        /// Get the path visibility of the first path
+        /// </summary>
+        /// <returns>idk what this returns</returns>
         public int PathVisibility()
         {
             return PathVisibility(0);
         }
+
+        /// <summary>
+        /// Get the path visibility of a path
+        /// </summary>
+        /// <param name="pa">The path you want to know the visibility of</param>
+        /// <returns>idk what this returns</returns>
         public int PathVisibility(int pa)
         { // returns the angle to the path pa in the pathway list, indexed from 1. Left most path is 1. If pa exceeds number of pathways detected, return zero.
             if (pa >= PathCount() || pa < 0)
@@ -168,7 +237,10 @@ namespace ProtractorLib
         }
 
         /////// SETTINGS ///////
-
+        /// <summary>
+        /// Set the scantime
+        /// </summary>
+        /// <param name="milliSeconds">Scan time in milliseconds. Min 15, Max 32767, default 30, 0 Scan only when called</param>
         public void ScanTime(int milliSeconds)
         {//0 = scan only when called. 1 to 15 = rescan every 15ms, >15 = rescan every time_ms milliseconds.  Default time_ms is set to 30ms.
             if (milliSeconds >= 1 && milliSeconds <= MINDUR - 1)
@@ -183,6 +255,11 @@ namespace ProtractorLib
             }
         }
 
+
+        /// <summary>
+        /// Sets a new I2C Address
+        /// </summary>
+        /// <param name="newAddress">I2C address. Min 2, Max 127. This will be stored after shutdown. See the manual on how to restore this</param>
         public void SetNewI2Caddress(int newAddress)
         { // change the I2C address. Will be stored after shutdown. See manual for instructions on restoring defaults. Default = 0x45 (69d).
             if (newAddress >= 2 && newAddress <= 127)
@@ -192,6 +269,10 @@ namespace ProtractorLib
             }
         }
 
+        /// <summary>
+        /// Sets a new Serial baudrate
+        /// </summary>
+        /// <param name="newBaudRate">Baudrate, Min 1200, Max 1000000. This will be stored after shutdown. See the manual on how to restore this</param>
         public void SetNewSerialBaudRate(int newBaudRate)
         { // change the Serial Bus baud rate. Will be stored after shutdown. See manual for instructions on restoring defaults. Default = 9600 baud. 0 = 1200, 1 = 2400, 2 = 4800, 3 = 9600, 4 = 19200, 5 = 28800, 6 = 38400, 7 = 57600, 8 = 115200, 9 = 230400
             if (newBaudRate >= 1200 && newBaudRate <= 1000000)
@@ -201,18 +282,27 @@ namespace ProtractorLib
             }
         }
 
+        /// <summary>
+        /// Set the feedback leds to follow the most visible objects detected
+        /// </summary>
         public void LEDshowObject()
         { // Set the feedback LEDs to follow the most visible Objects detected
             byte[] sendData = { LEDUSAGE, SHOWOBJ, 0x10 };
             _write(sendData, 3); // Send a signal (char LEDUSAGE) to tell Protractor that it needs to SHOWOBJ
         }
 
+        /// <summary>
+        /// Set the feedback LEDS to follow the most open pathway detected
+        /// </summary>
         public void LEDshowPath()
         { // Set the feedback LEDs to follow the most open pathway detected
             byte[] sendData = { LEDUSAGE, SHOWPATH, 0x10 };
             _write(sendData, 3); // Send a signal (char LEDUSAGE) to tell Protractor that it needs to SHOWPATH
         }
 
+        /// <summary>
+        /// Turn the feedback LEDs off
+        /// </summary>
         public void LEDoff()
         { // Turn off the feedback LEDs
             byte[] sendData = { LEDUSAGE, LEDOFF, 0x10 };
@@ -220,7 +310,7 @@ namespace ProtractorLib
         }
 
         // PRIVATES //
-
+        
         private int map(int x, int in_min, int in_max, int out_min, int out_max)
         {
             return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
