@@ -1,0 +1,8 @@
+﻿<Application
+    x:Class="Change_I2C_Address.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Change_I2C_Address"
+    RequestedTheme="Light">
+
+</Application>
