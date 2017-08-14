@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtractorLib", "Protractor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic_I2C", "Basic_I2C\Basic_I2C.csproj", "{118B379D-A00F-4B50-B131-F0AF36AA28FA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{3905CE13-C7B6-4F6D-80F9-25D6CE399EF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic_Serial", "Basic_Serial\Basic_Serial.csproj", "{06B49F6E-68F1-4B84-B629-BF80638CE6B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,8 +59,32 @@ Global
 		{118B379D-A00F-4B50-B131-F0AF36AA28FA}.Release|x86.ActiveCfg = Release|x86
 		{118B379D-A00F-4B50-B131-F0AF36AA28FA}.Release|x86.Build.0 = Release|x86
 		{118B379D-A00F-4B50-B131-F0AF36AA28FA}.Release|x86.Deploy.0 = Release|x86
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|ARM.ActiveCfg = Debug|ARM
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|ARM.Build.0 = Debug|ARM
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|ARM.Deploy.0 = Debug|ARM
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|x64.ActiveCfg = Debug|x64
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|x64.Build.0 = Debug|x64
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|x64.Deploy.0 = Debug|x64
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|x86.ActiveCfg = Debug|x86
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|x86.Build.0 = Debug|x86
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Debug|x86.Deploy.0 = Debug|x86
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|Any CPU.ActiveCfg = Release|x86
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|ARM.ActiveCfg = Release|ARM
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|ARM.Build.0 = Release|ARM
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|ARM.Deploy.0 = Release|ARM
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|x64.ActiveCfg = Release|x64
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|x64.Build.0 = Release|x64
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|x64.Deploy.0 = Release|x64
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|x86.ActiveCfg = Release|x86
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|x86.Build.0 = Release|x86
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{118B379D-A00F-4B50-B131-F0AF36AA28FA} = {3905CE13-C7B6-4F6D-80F9-25D6CE399EF4}
+		{06B49F6E-68F1-4B84-B629-BF80638CE6B5} = {3905CE13-C7B6-4F6D-80F9-25D6CE399EF4}
 	EndGlobalSection
 EndGlobal
