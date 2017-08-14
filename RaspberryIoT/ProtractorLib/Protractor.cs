@@ -259,7 +259,7 @@ namespace ProtractorLib
         /// <summary>
         /// Sets a new I2C Address
         /// </summary>
-        /// <param name="newAddress">I2C address. Min 2, Max 127. This will be stored after shutdown. See the manual on how to restore this</param>
+        /// <param name="newAddress">I2C address. Min 2, Max 127. This will be active after a reboot. See the manual on how to restore this</param>
         public void SetNewI2Caddress(int newAddress)
         { // change the I2C address. Will be stored after shutdown. See manual for instructions on restoring defaults. Default = 0x45 (69d).
             if (newAddress >= 2 && newAddress <= 127)
@@ -272,7 +272,7 @@ namespace ProtractorLib
         /// <summary>
         /// Sets a new Serial baudrate
         /// </summary>
-        /// <param name="newBaudRate">Baudrate, Min 1200, Max 1000000. This will be stored after shutdown. See the manual on how to restore this</param>
+        /// <param name="newBaudRate">Baudrate, Min 1200, Max 1000000. This will be active after a reboot. See the manual on how to restore this</param>
         public void SetNewSerialBaudRate(int newBaudRate)
         { // change the Serial Bus baud rate. Will be stored after shutdown. See manual for instructions on restoring defaults. Default = 9600 baud. 0 = 1200, 1 = 2400, 2 = 4800, 3 = 9600, 4 = 19200, 5 = 28800, 6 = 38400, 7 = 57600, 8 = 115200, 9 = 230400
             if (newBaudRate >= 1200 && newBaudRate <= 1000000)
