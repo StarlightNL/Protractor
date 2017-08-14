@@ -302,6 +302,7 @@ namespace ProtractorLib
 
         /// <summary>
         /// Turn the feedback LEDs off
+        /// NOTE: This also turns the green status LED off
         /// </summary>
         public void LEDoff()
         { // Turn off the feedback LEDs
